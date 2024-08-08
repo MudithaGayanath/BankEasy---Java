@@ -1,11 +1,32 @@
 package GUI;
 // For get user address details
+
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+
 public class CreateAccount2 extends javax.swing.JFrame {
 
-    public CreateAccount2() {
-        initComponents();
-    }
+    public HashMap<String,String> userData;
 
+    public CreateAccount2(HashMap map) {
+        initComponents();
+        subHeading.requestFocusInWindow();
+        this.userData = map;
+        String val = userData.get("line1");
+        if ( val != null ){
+            setup();
+        }
+        
+    }
+    
+    private void setup(){
+        line1.setText(String.valueOf(userData.get("line1")));
+        line2.setText(String.valueOf(userData.get("line2")));
+        pro.setSelectedItem(userData.get("pro"));
+        distric.setSelectedItem(userData.get("distric"));
+        city.setSelectedItem(userData.get("city"));
+        zipCoed.setText(String.valueOf(userData.get("zipCoed")));
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -14,13 +35,13 @@ public class CreateAccount2 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jTextField3 = new javax.swing.JTextField();
+        subHeading = new javax.swing.JLabel();
+        line1 = new javax.swing.JTextField();
+        line2 = new javax.swing.JTextField();
+        pro = new javax.swing.JComboBox<>();
+        distric = new javax.swing.JComboBox<>();
+        city = new javax.swing.JComboBox<>();
+        zipCoed = new javax.swing.JTextField();
         next = new javax.swing.JButton();
         back = new javax.swing.JButton();
 
@@ -32,31 +53,47 @@ public class CreateAccount2 extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bank Easy");
 
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 20)); // NOI18N
-        jLabel2.setText("Address Details");
+        subHeading.setFont(new java.awt.Font("Calibri", 0, 20)); // NOI18N
+        subHeading.setText("Address Details");
 
-        jTextField1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField1.setText("Line 1");
-
-        jTextField2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField2.setText("Line 2");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+        line1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        line1.setText("Line 1");
+        line1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                line1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                line1FocusLost(evt);
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        line2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        line2.setText("Line 2");
+        line2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                line2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                line2FocusLost(evt);
+            }
+        });
+        line2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                line2ActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        pro.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        pro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Westen Province", "Central Province", "Sabaragamuwa Province" }));
 
-        jComboBox3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        distric.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        distric.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kandy", "Kegalle", "colombo" }));
 
-        jTextField3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField3.setText("Zip Code");
+        city.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        city.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kegalle", "Deraniyagala", "Kandy", "peradeniya" }));
+
+        zipCoed.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        zipCoed.setText("Zip Code");
 
         next.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         next.setText("Next");
@@ -83,21 +120,21 @@ public class CreateAccount2 extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
+                    .addComponent(line1)
+                    .addComponent(line2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(subHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, 0, 180, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                            .addComponent(pro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(city, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField3)
-                                .addComponent(jComboBox2, 0, 180, Short.MAX_VALUE))
+                                .addComponent(zipCoed)
+                                .addComponent(distric, 0, 180, Short.MAX_VALUE))
                             .addComponent(next, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
@@ -108,19 +145,19 @@ public class CreateAccount2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(subHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(line1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(line2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(distric, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jTextField3))
+                    .addComponent(city, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(zipCoed))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(next, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
@@ -143,35 +180,85 @@ public class CreateAccount2 extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void line2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_line2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_line2ActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        new CreateAccount().setVisible(true);
+        new CreateAccount(userData).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backActionPerformed
 
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        new CreateAccount3().setVisible(true);
-        this.dispose();
+        if( validFilds()){}else{
+            userData.put("line1",line1.getText());
+            userData.put("line2",line2.getText());
+            userData.put("pro",String.valueOf(pro.getSelectedItem()));
+            userData.put("distric",String.valueOf(distric.getSelectedItem()));
+            userData.put("city",String.valueOf(city.getSelectedItem()));
+            userData.put("zipCode",zipCoed.getText());
+        }
     }//GEN-LAST:event_nextActionPerformed
 
-   
+    private void line1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_line1FocusGained
+         if (line1.getText().equals("Line 1")) {
+            line1.setText("");
+        } else {
+            line1.setText(line1.getText());
+        }
+    }//GEN-LAST:event_line1FocusGained
+
+    private void line1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_line1FocusLost
+         if (line1.getText().isEmpty()|| line1.getText().equals(" ")) {
+            line1.setText("Line 1");
+        } else {
+            line1.setText(line1.getText());
+        }
+    }//GEN-LAST:event_line1FocusLost
+
+    private void line2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_line2FocusGained
+        if (line2.getText().equals("Line 2") ) {
+            line2.setText("");
+        } else {
+            line2.setText(line2.getText());
+        }
+    }//GEN-LAST:event_line2FocusGained
+
+    private void line2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_line2FocusLost
+         if (line2.getText().isEmpty() || line2.getText().equals(" ")) {
+            line2.setText("Line 2");
+        } else {
+            line2.setText(line2.getText());
+        }
+    }//GEN-LAST:event_line2FocusLost
+    private boolean validFilds() {
+        if (line1.getText().equals("Line 1") || line1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Line 1 requerd");
+            line1.grabFocus();
+            return  true;
+        } else if (line2.getText().equals("Line 2") || line2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Line 2 requerd");
+            line2.grabFocus();
+            return  true;
+        }
+        else{
+            return  false;
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> city;
+    private javax.swing.JComboBox<String> distric;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField line1;
+    private javax.swing.JTextField line2;
     private javax.swing.JButton next;
+    private javax.swing.JComboBox<String> pro;
+    private javax.swing.JLabel subHeading;
+    private javax.swing.JTextField zipCoed;
     // End of variables declaration//GEN-END:variables
 }

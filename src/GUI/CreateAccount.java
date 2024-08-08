@@ -1,4 +1,3 @@
-
 package GUI;
 
 import java.util.HashMap;
@@ -6,20 +5,38 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
-
 public class CreateAccount extends javax.swing.JFrame {
 
-    public HashMap userData = new HashMap();
-   
+    public HashMap<String,String> userData = new HashMap<>();
+
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-     private static final String PHONE_REGEX = "^07[0-8][0-9]{3}[0-9]{4}$";
-     private static final String NIC_OLD_REGEX = "^[0-9]{9}V$";
-     private static final String NIC_NEW_REGEX = "^[0-9]{12}$";
+    private static final String PHONE_REGEX = "^07[0-8][0-9]{3}[0-9]{4}$";
+    private static final String NIC_OLD_REGEX = "^[0-9]{9}V$";
+    private static final String NIC_NEW_REGEX = "^[0-9]{12}$";
+
     public CreateAccount() {
         initComponents();
-       subHeading.requestFocusInWindow();
+        subHeading.requestFocusInWindow();
+
     }
-    
+
+    public CreateAccount(HashMap map) {
+        this();
+        this.userData = map;
+        setup();
+    }
+
+    private void setup() {
+        initials.setText(String.valueOf(userData.get("initials")));
+        surName.setText(String.valueOf(userData.get("surName")));
+        email.setText(String.valueOf(userData.get("email")));
+        phoneNumber.setText(String.valueOf(userData.get("phoneNumber")));
+        nic.setText(String.valueOf(userData.get("nic")));
+        dob.setText(String.valueOf(userData.get("dob")));
+        gender.setSelectedItem(userData.get("gender"));
+        System.out.println(userData.get("line2"));
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -34,7 +51,7 @@ public class CreateAccount extends javax.swing.JFrame {
         phoneNumber = new javax.swing.JTextField();
         nic = new javax.swing.JTextField();
         dob = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        gender = new javax.swing.JComboBox<>();
         next = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -124,8 +141,8 @@ public class CreateAccount extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male" }));
+        gender.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male" }));
 
         next.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         next.setText("Next");
@@ -144,7 +161,7 @@ public class CreateAccount extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(gender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(email)
                     .addComponent(phoneNumber)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -185,7 +202,7 @@ public class CreateAccount extends javax.swing.JFrame {
                     .addComponent(nic, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dob, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 15, Short.MAX_VALUE))
@@ -210,191 +227,214 @@ public class CreateAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dobActionPerformed
 
-    private void validFilds(){
-        if ( initials.getText().equals("Initials")  ){
+    private boolean validFilds() {
+        if (initials.getText().equals("Initials")) {
             JOptionPane.showMessageDialog(this, "Initials requerd");
             initials.grabFocus();
-        }else if ( initials.getText().startsWith(" ") | initials.getText().startsWith(".")){
+            return true;
+        } else if (initials.getText().startsWith(" ") | initials.getText().startsWith(".")) {
             JOptionPane.showMessageDialog(this, "Initials invalid");
             initials.grabFocus();
-        }else if ( surName.getText().equals("Surname")){
+            return true;
+        } else if (surName.getText().equals("Surname")) {
             JOptionPane.showMessageDialog(this, "Surname requerd");
             surName.grabFocus();
-        }else if ( surName.getText().startsWith(" ") | surName.getText().startsWith(".")){
+            return true;
+        } else if (surName.getText().startsWith(" ") | surName.getText().startsWith(".")) {
             JOptionPane.showMessageDialog(this, "Surname invalid");
             surName.grabFocus();
-        }else if ( email.getText().equals("Email")){
+            return true;
+        } else if (email.getText().equals("Email")) {
             JOptionPane.showMessageDialog(this, "Email requerd");
             email.grabFocus();
-        }else if ( CreateAccount.isValidEmail(email.getText())){
+            return true;
+        } else if (CreateAccount.isValidEmail(email.getText())) {
             JOptionPane.showMessageDialog(this, "Email invalid");
             email.grabFocus();
-        }
-        else if ( phoneNumber.getText().equals("Phone Number")){
+            return true;
+        } else if (phoneNumber.getText().equals("Phone Number")) {
             JOptionPane.showMessageDialog(this, "Phone Number requerd");
             phoneNumber.grabFocus();
-        }else if ( CreateAccount.isValidPhoneNumber(phoneNumber.getText())){
+            return true;
+        } else if (CreateAccount.isValidPhoneNumber(phoneNumber.getText())) {
             JOptionPane.showMessageDialog(this, "Phone Number invalid");
             phoneNumber.grabFocus();
-        }
-        else if ( nic.getText().equals("NIC")){
+            return true;
+        } else if (nic.getText().equals("NIC")) {
             JOptionPane.showMessageDialog(this, "NIC requerd");
             nic.grabFocus();
-        }else if ( nic.getText().length() <= 10){
-            if ( CreateAccount.isValidOldNic(nic.getText())){
+            return true;
+        } else if (nic.getText().length() <= 10) {
+            if (CreateAccount.isValidOldNic(nic.getText())) {
                 JOptionPane.showMessageDialog(this, "NIC invalid");
-            nic.grabFocus();
+                nic.grabFocus();
+                return true;
             }
-        }else if ( nic.getText().length() >= 12){
-            if ( CreateAccount.isValidNewNic(nic.getText())){
+        } else if (nic.getText().length() >= 12) {
+            if (CreateAccount.isValidNewNic(nic.getText())) {
                 JOptionPane.showMessageDialog(this, "NIC invalid");
-            nic.grabFocus();
+                nic.grabFocus();
+                return true;
             }
-        }else if ( dob.getText().equals("Date Of Birth") ){
+        } else if (dob.getText().equals("Date Of Birth")) {
             JOptionPane.showMessageDialog(this, "Date Of Birth requerd");
             dob.grabFocus();
+            return true;
         }
+        return false;
     }
-    
+
     public static boolean isValidEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         return !matcher.matches();
     }
+
     public static boolean isValidPhoneNumber(String phoneNumber) {
         Pattern pattern = Pattern.compile(PHONE_REGEX);
         Matcher matcher = pattern.matcher(phoneNumber);
         return !matcher.matches();
     }
+
     public static boolean isValidOldNic(String oldNic) {
         Pattern pattern = Pattern.compile(NIC_OLD_REGEX);
         Matcher matcher = pattern.matcher(oldNic);
         return !matcher.matches();
     }
+
     public static boolean isValidNewNic(String newNic) {
         Pattern pattern = Pattern.compile(NIC_NEW_REGEX);
         Matcher matcher = pattern.matcher(newNic);
         return !matcher.matches();
     }
-    
+
+    private void putData() {
+        userData.put("initials", initials.getText());
+        userData.put("surName", surName.getText());
+        userData.put("email", email.getText());
+        userData.put("phoneNumber", phoneNumber.getText());
+        userData.put("nic", nic.getText());
+        userData.put("dob", dob.getText());
+        userData.put("gender", String.valueOf(gender.getSelectedItem()));
+        
+    }
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-         validFilds();
-        
-//        new CreateAccount2().setVisible(true);
-//        this.dispose();
-        
+        if (validFilds()) {} else {
+            putData();
+            new CreateAccount2(userData).setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_nextActionPerformed
 
     private void initialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialsActionPerformed
-       
+
     }//GEN-LAST:event_initialsActionPerformed
 
     private void initialsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_initialsFocusGained
-        
-        if ( initials.getText().equals("Initials")){
-           initials.setText("");
-       }else{
-           initials.setText(initials.getText());
-       }
+
+        if (initials.getText().equals("Initials")) {
+            initials.setText("");
+        } else {
+            initials.setText(initials.getText());
+        }
     }//GEN-LAST:event_initialsFocusGained
 
     private void surNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_surNameFocusGained
-       
-       if ( surName.getText().equals("Surname")){
-           surName.setText("");
-       }else{
-           surName.setText(surName.getText());
-       }
+
+        if (surName.getText().equals("Surname")) {
+            surName.setText("");
+        } else {
+            surName.setText(surName.getText());
+        }
     }//GEN-LAST:event_surNameFocusGained
 
     private void surNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_surNameFocusLost
-        if ( surName.getText().isEmpty()){
+        if (surName.getText().isEmpty()) {
             surName.setText("Surname");
-        }else{
+        } else {
             surName.setText(surName.getText());
         }
     }//GEN-LAST:event_surNameFocusLost
 
     private void initialsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_initialsFocusLost
-      if ( initials.getText().isEmpty()){
-          initials.setText("Initials");
-      }else{
-          initials.setText(initials.getText());
-      }
-            
+        if (initials.getText().isEmpty()) {
+            initials.setText("Initials");
+        } else {
+            initials.setText(initials.getText());
+        }
+
     }//GEN-LAST:event_initialsFocusLost
 
     private void emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusGained
-       if ( email.getText().equals("Email")){
-        email.setText("");
-       }else{
-           email.setText(email.getText());
-       }
+        if (email.getText().equals("Email")) {
+            email.setText("");
+        } else {
+            email.setText(email.getText());
+        }
     }//GEN-LAST:event_emailFocusGained
 
     private void emailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusLost
-         if ( email.getText().isEmpty()){
-          email.setText("Email");
-      }else{
-          email.setText(email.getText());
-      }
+        if (email.getText().isEmpty()) {
+            email.setText("Email");
+        } else {
+            email.setText(email.getText());
+        }
     }//GEN-LAST:event_emailFocusLost
 
     private void phoneNumberFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFocusGained
-       if ( phoneNumber.getText().equals("Phone Number")){
-        phoneNumber.setText("");
-       }else{
-           phoneNumber.setText(phoneNumber.getText());
-       }
+        if (phoneNumber.getText().equals("Phone Number")) {
+            phoneNumber.setText("");
+        } else {
+            phoneNumber.setText(phoneNumber.getText());
+        }
     }//GEN-LAST:event_phoneNumberFocusGained
 
     private void phoneNumberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFocusLost
-        if ( phoneNumber.getText().isEmpty()){
-          phoneNumber.setText("Phone Number");
-      }else{
-          phoneNumber.setText(phoneNumber.getText());
-      }
+        if (phoneNumber.getText().isEmpty()) {
+            phoneNumber.setText("Phone Number");
+        } else {
+            phoneNumber.setText(phoneNumber.getText());
+        }
     }//GEN-LAST:event_phoneNumberFocusLost
 
     private void nicFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicFocusGained
-       if ( nic.getText().equals("NIC")){
-        nic.setText("");
-       }else{
-           nic.setText(nic.getText());
-       }
+        if (nic.getText().equals("NIC")) {
+            nic.setText("");
+        } else {
+            nic.setText(nic.getText());
+        }
     }//GEN-LAST:event_nicFocusGained
 
     private void nicFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicFocusLost
-           if ( nic.getText().isEmpty()){
-          nic.setText("NIC");
-      }else{
-          nic.setText(nic.getText());
-      }
+        if (nic.getText().isEmpty()) {
+            nic.setText("NIC");
+        } else {
+            nic.setText(nic.getText());
+        }
     }//GEN-LAST:event_nicFocusLost
 
     private void dobFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dobFocusGained
-      if ( dob.getText().equals("Date Of Birth")){
-        dob.setText("");
-      }else{
-          dob.setText(dob.getText());
-      }
+        if (dob.getText().equals("Date Of Birth")) {
+            dob.setText("");
+        } else {
+            dob.setText(dob.getText());
+        }
     }//GEN-LAST:event_dobFocusGained
 
     private void dobFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dobFocusLost
-         if ( dob.getText().isEmpty()){
-          dob.setText("Date Of Birth");
-      }else{
-          dob.setText(dob.getText());
-      }
+        if (dob.getText().isEmpty()) {
+            dob.setText("Date Of Birth");
+        } else {
+            dob.setText(dob.getText());
+        }
     }//GEN-LAST:event_dobFocusLost
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField dob;
     private javax.swing.JTextField email;
+    private javax.swing.JComboBox<String> gender;
     private javax.swing.JTextField initials;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
