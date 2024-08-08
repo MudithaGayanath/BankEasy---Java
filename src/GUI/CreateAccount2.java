@@ -25,6 +25,7 @@ public class CreateAccount2 extends javax.swing.JFrame {
         back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Create Account Step-2");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 36)); // NOI18N
@@ -59,6 +60,11 @@ public class CreateAccount2 extends javax.swing.JFrame {
 
         next.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         next.setText("Next");
+        next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextActionPerformed(evt);
+            }
+        });
 
         back.setFont(new java.awt.Font("Calibri", 0, 20)); // NOI18N
         back.setText("Back");
@@ -145,6 +151,11 @@ public class CreateAccount2 extends javax.swing.JFrame {
         new CreateAccount().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backActionPerformed
+
+    private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
+        new CreateAccount3().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_nextActionPerformed
 
    
 
