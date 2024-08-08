@@ -177,7 +177,7 @@ public class CreateAccount3 extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        new CreateAccount4().setVisible(true);
+        new CreateAccount4(userData).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_nextActionPerformed
 

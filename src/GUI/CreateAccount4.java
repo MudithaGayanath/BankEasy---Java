@@ -1,9 +1,11 @@
 package GUI;
 
+import java.util.HashMap;
+
 
 public class CreateAccount4 extends javax.swing.JFrame {
-
-    public CreateAccount4() {
+    public HashMap<String,String> userData;
+    public CreateAccount4(HashMap map) {
         initComponents();
     }
 
