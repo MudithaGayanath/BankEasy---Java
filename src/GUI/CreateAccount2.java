@@ -94,6 +94,14 @@ public class CreateAccount2 extends javax.swing.JFrame {
 
         zipCoed.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         zipCoed.setText("Zip Code");
+        zipCoed.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                zipCoedFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                zipCoedFocusLost(evt);
+            }
+        });
 
         next.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         next.setText("Next");
@@ -197,6 +205,8 @@ public class CreateAccount2 extends javax.swing.JFrame {
             userData.put("distric",String.valueOf(distric.getSelectedItem()));
             userData.put("city",String.valueOf(city.getSelectedItem()));
             userData.put("zipCode",zipCoed.getText());
+            new CreateAccount3(userData).setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_nextActionPerformed
 
@@ -231,6 +241,22 @@ public class CreateAccount2 extends javax.swing.JFrame {
             line2.setText(line2.getText());
         }
     }//GEN-LAST:event_line2FocusLost
+
+    private void zipCoedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipCoedFocusGained
+          if (zipCoed.getText().equals("Zip Code") ) {
+            zipCoed.setText("");
+        } else {
+            zipCoed.setText(zipCoed.getText());
+        }
+    }//GEN-LAST:event_zipCoedFocusGained
+
+    private void zipCoedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_zipCoedFocusLost
+        if (zipCoed.getText().isEmpty() || zipCoed.getText().equals(" ")) {
+            zipCoed.setText("Zip Code");
+        } else {
+            zipCoed.setText(zipCoed.getText());
+        }
+    }//GEN-LAST:event_zipCoedFocusLost
     private boolean validFilds() {
         if (line1.getText().equals("Line 1") || line1.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Line 1 requerd");
