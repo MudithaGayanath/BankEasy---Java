@@ -1,17 +1,24 @@
 
 package GUI;
 
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 
 public class CreateAccount extends javax.swing.JFrame {
 
+    public HashMap userData = new HashMap();
    
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+     private static final String PHONE_REGEX = "^07[0-8][0-9]{3}[0-9]{4}$";
+     private static final String NIC_OLD_REGEX = "^[0-9]{9}V$";
+     private static final String NIC_NEW_REGEX = "^[0-9]{12}$";
     public CreateAccount() {
         initComponents();
        subHeading.requestFocusInWindow();
     }
-    
-    
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -203,9 +210,78 @@ public class CreateAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dobActionPerformed
 
+    private void validFilds(){
+        if ( initials.getText().equals("Initials")  ){
+            JOptionPane.showMessageDialog(this, "Initials requerd");
+            initials.grabFocus();
+        }else if ( initials.getText().startsWith(" ") | initials.getText().startsWith(".")){
+            JOptionPane.showMessageDialog(this, "Initials invalid");
+            initials.grabFocus();
+        }else if ( surName.getText().equals("Surname")){
+            JOptionPane.showMessageDialog(this, "Surname requerd");
+            surName.grabFocus();
+        }else if ( surName.getText().startsWith(" ") | surName.getText().startsWith(".")){
+            JOptionPane.showMessageDialog(this, "Surname invalid");
+            surName.grabFocus();
+        }else if ( email.getText().equals("Email")){
+            JOptionPane.showMessageDialog(this, "Email requerd");
+            email.grabFocus();
+        }else if ( CreateAccount.isValidEmail(email.getText())){
+            JOptionPane.showMessageDialog(this, "Email invalid");
+            email.grabFocus();
+        }
+        else if ( phoneNumber.getText().equals("Phone Number")){
+            JOptionPane.showMessageDialog(this, "Phone Number requerd");
+            phoneNumber.grabFocus();
+        }else if ( CreateAccount.isValidPhoneNumber(phoneNumber.getText())){
+            JOptionPane.showMessageDialog(this, "Phone Number invalid");
+            phoneNumber.grabFocus();
+        }
+        else if ( nic.getText().equals("NIC")){
+            JOptionPane.showMessageDialog(this, "NIC requerd");
+            nic.grabFocus();
+        }else if ( nic.getText().length() <= 10){
+            if ( CreateAccount.isValidOldNic(nic.getText())){
+                JOptionPane.showMessageDialog(this, "NIC invalid");
+            nic.grabFocus();
+            }
+        }else if ( nic.getText().length() >= 12){
+            if ( CreateAccount.isValidNewNic(nic.getText())){
+                JOptionPane.showMessageDialog(this, "NIC invalid");
+            nic.grabFocus();
+            }
+        }else if ( dob.getText().equals("Date Of Birth") ){
+            JOptionPane.showMessageDialog(this, "Date Of Birth requerd");
+            dob.grabFocus();
+        }
+    }
+    
+    public static boolean isValidEmail(String email) {
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        return !matcher.matches();
+    }
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+        Pattern pattern = Pattern.compile(PHONE_REGEX);
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return !matcher.matches();
+    }
+    public static boolean isValidOldNic(String oldNic) {
+        Pattern pattern = Pattern.compile(NIC_OLD_REGEX);
+        Matcher matcher = pattern.matcher(oldNic);
+        return !matcher.matches();
+    }
+    public static boolean isValidNewNic(String newNic) {
+        Pattern pattern = Pattern.compile(NIC_NEW_REGEX);
+        Matcher matcher = pattern.matcher(newNic);
+        return !matcher.matches();
+    }
+    
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        new CreateAccount2().setVisible(true);
-        this.dispose();
+         validFilds();
+        
+//        new CreateAccount2().setVisible(true);
+//        this.dispose();
         
     }//GEN-LAST:event_nextActionPerformed
 
@@ -214,11 +290,21 @@ public class CreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_initialsActionPerformed
 
     private void initialsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_initialsFocusGained
-        initials.setText("");
+        
+        if ( initials.getText().equals("Initials")){
+           initials.setText("");
+       }else{
+           initials.setText(initials.getText());
+       }
     }//GEN-LAST:event_initialsFocusGained
 
     private void surNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_surNameFocusGained
-       surName.setText("");
+       
+       if ( surName.getText().equals("Surname")){
+           surName.setText("");
+       }else{
+           surName.setText(surName.getText());
+       }
     }//GEN-LAST:event_surNameFocusGained
 
     private void surNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_surNameFocusLost
@@ -239,7 +325,11 @@ public class CreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_initialsFocusLost
 
     private void emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusGained
-       email.setText("");
+       if ( email.getText().equals("Email")){
+        email.setText("");
+       }else{
+           email.setText(email.getText());
+       }
     }//GEN-LAST:event_emailFocusGained
 
     private void emailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusLost
@@ -251,7 +341,11 @@ public class CreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_emailFocusLost
 
     private void phoneNumberFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFocusGained
-       phoneNumber.setText("");
+       if ( phoneNumber.getText().equals("Phone Number")){
+        phoneNumber.setText("");
+       }else{
+           phoneNumber.setText(phoneNumber.getText());
+       }
     }//GEN-LAST:event_phoneNumberFocusGained
 
     private void phoneNumberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFocusLost
@@ -263,7 +357,11 @@ public class CreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_phoneNumberFocusLost
 
     private void nicFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicFocusGained
-       nic.setText("");
+       if ( nic.getText().equals("NIC")){
+        nic.setText("");
+       }else{
+           nic.setText(nic.getText());
+       }
     }//GEN-LAST:event_nicFocusGained
 
     private void nicFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicFocusLost
@@ -275,7 +373,11 @@ public class CreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_nicFocusLost
 
     private void dobFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dobFocusGained
-      dob.setText("");
+      if ( dob.getText().equals("Date Of Birth")){
+        dob.setText("");
+      }else{
+          dob.setText(dob.getText());
+      }
     }//GEN-LAST:event_dobFocusGained
 
     private void dobFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dobFocusLost
