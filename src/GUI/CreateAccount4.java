@@ -6,6 +6,7 @@ import java.util.HashMap;
 public class CreateAccount4 extends javax.swing.JFrame {
     public HashMap<String,String> userData;
     public CreateAccount4(HashMap map) {
+        userData = map;
         initComponents();
     }
 

@@ -25,7 +25,7 @@ public class CreateAccount2 extends javax.swing.JFrame {
         pro.setSelectedItem(userData.get("pro"));
         distric.setSelectedItem(userData.get("distric"));
         city.setSelectedItem(userData.get("city"));
-        zipCoed.setText(String.valueOf(userData.get("zipCoed")));
+        zipCoed.setText(String.valueOf(userData.get("zipCode")));
     }
 
     @SuppressWarnings("unchecked")
