@@ -7,7 +7,10 @@ public class CreateAccount extends javax.swing.JFrame {
    
     public CreateAccount() {
         initComponents();
+       subHeading.requestFocusInWindow();
     }
+    
+    
 
     
     @SuppressWarnings("unchecked")
@@ -17,13 +20,13 @@ public class CreateAccount extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        subHeading = new javax.swing.JLabel();
+        initials = new javax.swing.JTextField();
+        surName = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
+        phoneNumber = new javax.swing.JTextField();
+        nic = new javax.swing.JTextField();
+        dob = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         next = new javax.swing.JButton();
 
@@ -35,29 +38,82 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bank Easy");
 
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 20)); // NOI18N
-        jLabel2.setText("Personal Details ");
+        subHeading.setFont(new java.awt.Font("Calibri", 0, 20)); // NOI18N
+        subHeading.setText("Personal Details ");
 
-        jTextField1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField1.setText("Initials");
-
-        jTextField3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField3.setText("Surname");
-
-        jTextField2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField2.setText("Email");
-
-        jTextField4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField4.setText("Phone Number");
-
-        jTextField5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField5.setText("NIC");
-
-        jTextField6.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jTextField6.setText("Date Of Birth");
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        initials.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        initials.setText("Initials");
+        initials.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                initialsFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                initialsFocusLost(evt);
+            }
+        });
+        initials.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                initialsActionPerformed(evt);
+            }
+        });
+
+        surName.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        surName.setText("Surname");
+        surName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                surNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                surNameFocusLost(evt);
+            }
+        });
+
+        email.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        email.setText("Email");
+        email.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailFocusLost(evt);
+            }
+        });
+
+        phoneNumber.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        phoneNumber.setText("Phone Number");
+        phoneNumber.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                phoneNumberFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                phoneNumberFocusLost(evt);
+            }
+        });
+
+        nic.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        nic.setText("NIC");
+        nic.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nicFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nicFocusLost(evt);
+            }
+        });
+
+        dob.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        dob.setText("Date Of Birth");
+        dob.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                dobFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dobFocusLost(evt);
+            }
+        });
+        dob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dobActionPerformed(evt);
             }
         });
 
@@ -82,18 +138,18 @@ public class CreateAccount extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField4)
+                    .addComponent(email)
+                    .addComponent(phoneNumber)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nic, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                        .addComponent(dob, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(initials, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                        .addComponent(surName, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(subHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -108,19 +164,19 @@ public class CreateAccount extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(subHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(initials, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(surName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(phoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nic, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dob, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -143,9 +199,9 @@ public class CreateAccount extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void dobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_dobActionPerformed
 
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
         new CreateAccount2().setVisible(true);
@@ -153,20 +209,97 @@ public class CreateAccount extends javax.swing.JFrame {
         
     }//GEN-LAST:event_nextActionPerformed
 
+    private void initialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialsActionPerformed
+       
+    }//GEN-LAST:event_initialsActionPerformed
+
+    private void initialsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_initialsFocusGained
+        initials.setText("");
+    }//GEN-LAST:event_initialsFocusGained
+
+    private void surNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_surNameFocusGained
+       surName.setText("");
+    }//GEN-LAST:event_surNameFocusGained
+
+    private void surNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_surNameFocusLost
+        if ( surName.getText().isEmpty()){
+            surName.setText("Surname");
+        }else{
+            surName.setText(surName.getText());
+        }
+    }//GEN-LAST:event_surNameFocusLost
+
+    private void initialsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_initialsFocusLost
+      if ( initials.getText().isEmpty()){
+          initials.setText("Initials");
+      }else{
+          initials.setText(initials.getText());
+      }
+            
+    }//GEN-LAST:event_initialsFocusLost
+
+    private void emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusGained
+       email.setText("");
+    }//GEN-LAST:event_emailFocusGained
+
+    private void emailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusLost
+         if ( email.getText().isEmpty()){
+          email.setText("Email");
+      }else{
+          email.setText(email.getText());
+      }
+    }//GEN-LAST:event_emailFocusLost
+
+    private void phoneNumberFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFocusGained
+       phoneNumber.setText("");
+    }//GEN-LAST:event_phoneNumberFocusGained
+
+    private void phoneNumberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneNumberFocusLost
+        if ( phoneNumber.getText().isEmpty()){
+          phoneNumber.setText("Phone Number");
+      }else{
+          phoneNumber.setText(phoneNumber.getText());
+      }
+    }//GEN-LAST:event_phoneNumberFocusLost
+
+    private void nicFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicFocusGained
+       nic.setText("");
+    }//GEN-LAST:event_nicFocusGained
+
+    private void nicFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicFocusLost
+           if ( nic.getText().isEmpty()){
+          nic.setText("NIC");
+      }else{
+          nic.setText(nic.getText());
+      }
+    }//GEN-LAST:event_nicFocusLost
+
+    private void dobFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dobFocusGained
+      dob.setText("");
+    }//GEN-LAST:event_dobFocusGained
+
+    private void dobFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dobFocusLost
+         if ( dob.getText().isEmpty()){
+          dob.setText("Date Of Birth");
+      }else{
+          dob.setText(dob.getText());
+      }
+    }//GEN-LAST:event_dobFocusLost
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField dob;
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField initials;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JButton next;
+    private javax.swing.JTextField nic;
+    private javax.swing.JTextField phoneNumber;
+    private javax.swing.JLabel subHeading;
+    private javax.swing.JTextField surName;
     // End of variables declaration//GEN-END:variables
 }
