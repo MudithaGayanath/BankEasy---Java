@@ -8,6 +8,7 @@ public class CreateAccount4 extends javax.swing.JFrame {
     public CreateAccount4(HashMap map) {
         userData = map;
         initComponents();
+        // මතක නෑයකෝ
     }
 
 
