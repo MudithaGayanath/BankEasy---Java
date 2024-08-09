@@ -1,6 +1,7 @@
 package GUI;
 
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 
 public class CreateAccount4 extends javax.swing.JFrame {
@@ -148,7 +149,22 @@ public class CreateAccount4 extends javax.swing.JFrame {
     }//GEN-LAST:event_retypePasswordActionPerformed
 
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        // TODO add your handling code here:
+       if ( userName.getText().isEmpty() || userName.getText() == " "){
+           JOptionPane.showMessageDialog(this, "User name requerd");
+            userName.grabFocus();
+       }else if ( String.copyValueOf(password.getPassword()).isEmpty()  ){
+           JOptionPane.showMessageDialog(this, "Password requerd");
+            password.grabFocus();
+       }else if ( password.getPassword().length < 5){
+           JOptionPane.showMessageDialog(this, "Password must be contain 5 charactors");
+            password.grabFocus();
+       }else if ( password.getPassword().length > 10){
+            JOptionPane.showMessageDialog(this, "Password must not be more than 10 charactors");
+            password.grabFocus();
+       }else if ( String.valueOf(retypePassword.getPassword()) != String.copyValueOf(password.getPassword())){
+           JOptionPane.showMessageDialog(this, "Password did not mached");
+            password.grabFocus();
+       }
     }//GEN-LAST:event_nextActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
