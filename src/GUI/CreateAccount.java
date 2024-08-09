@@ -1,9 +1,16 @@
 package GUI;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import modal.Mysql;
 
 public class CreateAccount extends javax.swing.JFrame {
 
@@ -17,13 +24,29 @@ public class CreateAccount extends javax.swing.JFrame {
     public CreateAccount() {
         initComponents();
         subHeading.requestFocusInWindow();
-
+        try {
+            loadGender();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to load genders");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public CreateAccount(HashMap map) {
         this();
         this.userData = map;
         setup();
+    }
+    
+    private void loadGender() throws SQLException,ClassNotFoundException{
+        ResultSet rs = Mysql.search("SELECT * FROM `gender`");
+        Vector<String> gen = new Vector<>();
+        gen.add("Gender");
+        while ( rs.next()){
+            gen.add(rs.getString("gender_name"));
+        }
+        gender.setModel(new DefaultComboBoxModel(gen));
     }
 
     private void setup() {
@@ -142,7 +165,6 @@ public class CreateAccount extends javax.swing.JFrame {
         });
 
         gender.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male" }));
 
         next.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         next.setText("Next");
@@ -269,19 +291,24 @@ public class CreateAccount extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "NIC invalid");
                 nic.grabFocus();
                 return true;
-            }
+            }else{}
         } else if (nic.getText().length() >= 12) {
             if (CreateAccount.isValidNewNic(nic.getText())) {
                 JOptionPane.showMessageDialog(this, "NIC invalid");
                 nic.grabFocus();
                 return true;
-            }
+            }else{}
         } else if (dob.getText().equals("Date Of Birth")) {
             JOptionPane.showMessageDialog(this, "Date Of Birth requerd");
             dob.grabFocus();
             return true;
+        }else if ( gender.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Gender requerd");
+            gender.grabFocus();
+            return true;
         }
         return false;
+        
     }
 
     public static boolean isValidEmail(String email) {
