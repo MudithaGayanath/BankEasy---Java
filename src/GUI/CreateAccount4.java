@@ -1,5 +1,6 @@
 package GUI;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -161,9 +162,9 @@ public class CreateAccount4 extends javax.swing.JFrame {
        }else if ( password.getPassword().length > 10){
             JOptionPane.showMessageDialog(this, "Password must not be more than 10 charactors");
             password.grabFocus();
-       }else if ( String.valueOf(retypePassword.getPassword()) != String.valueOf(password.getPassword())){
+       }else if ( !Arrays.equals(retypePassword.getPassword(), password.getPassword())){
            JOptionPane.showMessageDialog(this, "Password did not mached");
-            password.grabFocus();
+            retypePassword.grabFocus();
        }
     }//GEN-LAST:event_nextActionPerformed
 
