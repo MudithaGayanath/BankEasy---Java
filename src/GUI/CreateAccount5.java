@@ -422,6 +422,7 @@ private HashMap<String,String> userData;
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
         if ( agree.isSelected()){
+            
             JOptionPane.showMessageDialog(this,"Account Created");
         }else{
              JOptionPane.showMessageDialog(this,"Agree to the terms and conditions");

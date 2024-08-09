@@ -16,11 +16,11 @@ public class Mysql {
         }
     }
 
-    public static ResultSet iud(String query) throws ClassNotFoundException,SQLException{
+    public static ResultSet search(String query) throws ClassNotFoundException,SQLException{
         Mysql.createConnection();
         return con.createStatement().executeQuery(query);
     }
-    public static int search(String query)throws ClassNotFoundException,SQLException{
+    public static int iud(String query)throws ClassNotFoundException,SQLException{
         Mysql.createConnection();
         return con.createStatement().executeUpdate(query);
     }

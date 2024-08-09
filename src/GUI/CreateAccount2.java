@@ -1,20 +1,36 @@
 package GUI;
 // For get user address details
 
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import modal.Mysql;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CreateAccount2 extends javax.swing.JFrame {
 
     public HashMap<String,String> userData;
+    
 
     public CreateAccount2(HashMap map) {
         initComponents();
+        
         subHeading.requestFocusInWindow();
         this.userData = map;
         String val = userData.get("line1");
         if ( val != null ){
             setup();
+        }
+        try {
+            loadPros();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to load provinces");
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Error");
         }
         
     }
@@ -26,6 +42,18 @@ public class CreateAccount2 extends javax.swing.JFrame {
         distric.setSelectedItem(userData.get("distric"));
         city.setSelectedItem(userData.get("city"));
         zipCoed.setText(String.valueOf(userData.get("zipCode")));
+    }
+    
+    private void loadPros() throws SQLException,ClassNotFoundException {
+        ResultSet rs =  Mysql.search("SELECT * FROM `province`");
+        Vector<String> pros = new Vector<>();
+        while (rs.next()){
+            pros.add(rs.getString("province_name"));
+        }
+        pro.setModel(new DefaultComboBoxModel(pros));
+        
+        
+
     }
 
     @SuppressWarnings("unchecked")
