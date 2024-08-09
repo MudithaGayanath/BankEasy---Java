@@ -22,6 +22,7 @@ public class CreateAccount3 extends javax.swing.JFrame {
             accountNumber.setText(String.valueOf(accNo));
             branch.setText(userData.get("city"));
             userData.put("accountNumber", String.valueOf(accNo));
+            userData.put("amount", String.valueOf(diposit.getText()));
         }else{
             accountNumber.setText(userDataAccNo);
             branch.setText(userData.get("city"));

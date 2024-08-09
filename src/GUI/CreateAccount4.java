@@ -165,6 +165,11 @@ public class CreateAccount4 extends javax.swing.JFrame {
        }else if ( !Arrays.equals(retypePassword.getPassword(), password.getPassword())){
            JOptionPane.showMessageDialog(this, "Password did not mached");
             retypePassword.grabFocus();
+       }else {
+           userData.put("userName",String.valueOf(userName.getText()));
+           userData.put("password",String.valueOf(password.getPassword()));
+           new CreateAccount5(userData).setVisible(true);
+           this.dispose();
        }
     }//GEN-LAST:event_nextActionPerformed
 
