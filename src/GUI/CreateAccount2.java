@@ -266,6 +266,10 @@ public class CreateAccount2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Line 2 requerd");
             line2.grabFocus();
             return  true;
+        }else if ( zipCoed.getText().isEmpty() || zipCoed.getText() == " " || zipCoed.getText().equals("Zip Code")){
+            JOptionPane.showMessageDialog(this, "Zip Code requerd");
+            zipCoed.grabFocus();
+            return  true;
         }
         else{
             return  false;
