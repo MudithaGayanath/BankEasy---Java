@@ -152,7 +152,7 @@ public class CreateAccount4 extends javax.swing.JFrame {
        if ( userName.getText().isEmpty() || userName.getText() == " "){
            JOptionPane.showMessageDialog(this, "User name requerd");
             userName.grabFocus();
-       }else if ( String.copyValueOf(password.getPassword()).isEmpty()  ){
+       }else if ( String.valueOf(password.getPassword()).isEmpty()  ){
            JOptionPane.showMessageDialog(this, "Password requerd");
             password.grabFocus();
        }else if ( password.getPassword().length < 5){
@@ -161,7 +161,7 @@ public class CreateAccount4 extends javax.swing.JFrame {
        }else if ( password.getPassword().length > 10){
             JOptionPane.showMessageDialog(this, "Password must not be more than 10 charactors");
             password.grabFocus();
-       }else if ( String.valueOf(retypePassword.getPassword()) != String.copyValueOf(password.getPassword())){
+       }else if ( String.valueOf(retypePassword.getPassword()) != String.valueOf(password.getPassword())){
            JOptionPane.showMessageDialog(this, "Password did not mached");
             password.grabFocus();
        }
