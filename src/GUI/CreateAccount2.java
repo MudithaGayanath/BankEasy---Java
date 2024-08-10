@@ -53,8 +53,8 @@ public class CreateAccount2 extends javax.swing.JFrame {
         pro.setModel(new DefaultComboBoxModel(pros));
     }
 
-    private void loadDistrict(int index) throws SQLException, ClassNotFoundException {
-        ResultSet rs = Mysql.search("SELECT * FROM `district` WHERE `province_id`='"+index+"'");
+    private void loadDistrict(String name) throws SQLException, ClassNotFoundException {
+        ResultSet rs = Mysql.search("SELECT * FROM `district` WHERE `province_id` IN ( SELECT `province_id` FROM `province` WHERE  `province_name`='"+name+"')");
         Vector<String> dis = new Vector<>();
         dis.add("District");
         while (rs.next()) {
@@ -63,8 +63,8 @@ public class CreateAccount2 extends javax.swing.JFrame {
         distric.setModel(new DefaultComboBoxModel(dis));
     }
 
-    private void loadCity(int index) throws SQLException, ClassNotFoundException {
-        ResultSet rs = Mysql.search("SELECT * FROM `city` WHERE `district_id`='"+index+"'");
+    private void loadCity(String name) throws SQLException, ClassNotFoundException {
+        ResultSet rs = Mysql.search("SELECT * FROM `city` WHERE `district_id` IN ( SELECT `district_id` FROM `district` WHERE  `district_name`='"+name+"')");
         Vector<String> cty = new Vector<>();
         cty.add("City");
         while (rs.next()) {
@@ -322,9 +322,11 @@ public class CreateAccount2 extends javax.swing.JFrame {
 
     private void proActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proActionPerformed
         try {
-            loadDistrict(pro.getSelectedIndex());
+            loadDistrict(String.valueOf(pro.getSelectedItem()));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to load district");
+            System.out.println(ex);
+                    
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Error");
         }
@@ -332,7 +334,7 @@ public class CreateAccount2 extends javax.swing.JFrame {
 
     private void districActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_districActionPerformed
         try {
-            loadCity(distric.getSelectedIndex());
+            loadCity(String.valueOf(distric.getSelectedItem()));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to load city");
         } catch (ClassNotFoundException ex) {
@@ -341,7 +343,18 @@ public class CreateAccount2 extends javax.swing.JFrame {
     }//GEN-LAST:event_districActionPerformed
 
     private void cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityActionPerformed
-        ResultSet rs = Mysql.search("SELECT * FROM `city` WHERE `zip_code`='"+city.getS+"'");
+        
+        System.out.println(String.valueOf(city.getSelectedItem()));
+        try {
+           ResultSet  rs = Mysql.search("SELECT `zip_code` FROM `city` WHERE `city_name`='"+String.valueOf(city.getSelectedItem())+"'");
+           String code = rs.getString("zip_code"); 
+           zipCoed.setText(code);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateAccount2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateAccount2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_cityActionPerformed
     private boolean validFilds() {
         if (line1.getText().equals("Line 1") || line1.getText().isEmpty()) {
