@@ -15,9 +15,9 @@ public class CreateAccount2 extends javax.swing.JFrame {
 
     public HashMap<String, String> userData;
 
+
     public CreateAccount2(HashMap map) {
         initComponents();
-
         subHeading.requestFocusInWindow();
         this.userData = map;
         String val = userData.get("line1");
@@ -54,7 +54,7 @@ public class CreateAccount2 extends javax.swing.JFrame {
     }
 
     private void loadDistrict(String name) throws SQLException, ClassNotFoundException {
-        ResultSet rs = Mysql.search("SELECT * FROM `district` WHERE `province_id` IN ( SELECT `province_id` FROM `province` WHERE  `province_name`='"+name+"')");
+        ResultSet rs = Mysql.search("SELECT * FROM `district` WHERE `province_id` IN ( SELECT `province_id` FROM `province` WHERE  `province_name`='" + name + "')");
         Vector<String> dis = new Vector<>();
         dis.add("District");
         while (rs.next()) {
@@ -64,7 +64,7 @@ public class CreateAccount2 extends javax.swing.JFrame {
     }
 
     private void loadCity(String name) throws SQLException, ClassNotFoundException {
-        ResultSet rs = Mysql.search("SELECT * FROM `city` WHERE `district_id` IN ( SELECT `district_id` FROM `district` WHERE  `district_name`='"+name+"')");
+        ResultSet rs = Mysql.search("SELECT * FROM `city` WHERE `district_id` IN ( SELECT `district_id` FROM `district` WHERE  `district_name`='" + name + "')");
         Vector<String> cty = new Vector<>();
         cty.add("City");
         while (rs.next()) {
@@ -326,7 +326,7 @@ public class CreateAccount2 extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to load district");
             System.out.println(ex);
-                    
+
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Error");
         }
@@ -343,18 +343,17 @@ public class CreateAccount2 extends javax.swing.JFrame {
     }//GEN-LAST:event_districActionPerformed
 
     private void cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityActionPerformed
-        
-        System.out.println(String.valueOf(city.getSelectedItem()));
         try {
-           ResultSet  rs = Mysql.search("SELECT `zip_code` FROM `city` WHERE `city_name`='"+String.valueOf(city.getSelectedItem())+"'");
-           String code = rs.getString("zip_code"); 
-           zipCoed.setText(code);
+            ResultSet rs = Mysql.search("SELECT `zip_code` FROM `city` WHERE `city_name`='" + String.valueOf(city.getSelectedItem()) + "'");
+            if ( rs.next()){
+            zipCoed.setText(rs.getString("zip_code"));
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CreateAccount2.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(CreateAccount2.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_cityActionPerformed
     private boolean validFilds() {
         if (line1.getText().equals("Line 1") || line1.getText().isEmpty()) {

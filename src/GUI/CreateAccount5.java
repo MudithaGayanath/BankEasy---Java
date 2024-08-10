@@ -1,21 +1,25 @@
-
 package GUI;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import modal.Mysql;
 
 public class CreateAccount5 extends javax.swing.JFrame {
-private HashMap<String,String> userData;
-    
-    public CreateAccount5(HashMap<String,String> map ) {
+
+    private HashMap<String, String> userData;
+
+    public CreateAccount5(HashMap<String, String> map) {
         initComponents();
         userData = map;
         create.setEnabled(false);
         setup();
     }
-    
-    private void setup(){
+
+    private void setup() {
         initials.setText(userData.get("initials"));
         surName.setText(userData.get("surName"));
         email.setText(userData.get("email"));
@@ -33,7 +37,7 @@ private HashMap<String,String> userData;
         userName.setText(userData.get("userName"));
         phoneNumber.setText(userData.get("phoneNumber"));
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -421,16 +425,39 @@ private HashMap<String,String> userData;
     }//GEN-LAST:event_agreeActionPerformed
 
     private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
-        if ( agree.isSelected()){
-            
-            JOptionPane.showMessageDialog(this,"Account Created");
-        }else{
-             JOptionPane.showMessageDialog(this,"Agree to the terms and conditions");
-             agree.grabFocus();
+        if (agree.isSelected()) {
+            try {
+                if (searchOldUser()) {
+                    JOptionPane.showMessageDialog(this, "Arleady have user with a same Email , NIC or Phone number");
+                    new CreateAccount().setVisible(true);
+                } else {
+                    ResultSet gRs = Mysql.search("SELECT * FROM `gender` WHERE `gender_name`='" + userData.get("gender") + "'");
+                    if (gRs.next()) {
+                        Mysql.iud("INSERT INTO `user` (`initials`,`ser_name`,`email`,`nic`,`phone_number`,`dob`,`user_name`,`password`,`gender_id`) "
+                                + "VALUES ('" + userData.get("initials") + "','" + userData.get("surName") + "','" + userData.get("email") + "','" + userData.get("nic") + "','" + userData.get("phoneNumber") + "','" + userData.get("dob") + "','" + userData.get("userName") + "','" + userData.get("password") + "','" + gRs.getInt("gender_id") + "')");
+                        JOptionPane.showMessageDialog(this, "Account Created! Login to your account");
+                        new Welcome().setVisible(true);
+                    }
+
+                }
+
+                this.dispose();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Agree to the terms and conditions");
+            agree.grabFocus();
         }
     }//GEN-LAST:event_createActionPerformed
 
-    
+    private boolean searchOldUser() throws ClassNotFoundException, SQLException {
+        return Mysql.search("SELECT * FROM `user` WHERE `nic`='" + userData.get("nic") + "' OR `phone_number`='" + userData.get("phoneNumber") + "' OR `email`='" + userData.get("email") + "'").next();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accNo;
