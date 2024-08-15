@@ -22,7 +22,7 @@ public class CreateAccount3 extends javax.swing.JFrame {
             accountNumber.setText(String.valueOf(accNo));
             branch.setText(userData.get("city"));
             userData.put("accountNumber", String.valueOf(accNo));
-            userData.put("amount", String.valueOf(diposit.getText()));
+            
         }else{
             accountNumber.setText(userDataAccNo);
             branch.setText(userData.get("city"));
@@ -178,6 +178,7 @@ public class CreateAccount3 extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
+        userData.put("amount", String.valueOf(diposit.getText()));
         new CreateAccount4(userData).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_nextActionPerformed

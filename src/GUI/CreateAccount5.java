@@ -1,11 +1,9 @@
 package GUI;
 
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modal.Mysql;
 
@@ -38,7 +36,7 @@ public class CreateAccount5 extends javax.swing.JFrame {
         userName.setText(userData.get("userName"));
         phoneNumber.setText(userData.get("phoneNumber"));
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -432,16 +430,20 @@ public class CreateAccount5 extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Arleady have user with a same Email , NIC or Phone number");
                     new CreateAccount().setVisible(true);
                 } else {
-                    
-                    
-
+                    insertUser();
+                    insertAccount();
+                    insertAddress();
+                    JOptionPane.showMessageDialog(this, "Registration successfull. Login to your account");
+                    new Login().setVisible(true);
                 }
-
+                userData = null;
                 this.dispose();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "System error. Unable to load file..");
+                ex.printStackTrace();
             } catch (SQLException ex) {
-                Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "System error. Unable to insert user..");
+                ex.printStackTrace();
             }
 
         } else {
@@ -453,19 +455,37 @@ public class CreateAccount5 extends javax.swing.JFrame {
     private boolean searchOldUser() throws ClassNotFoundException, SQLException {
         return Mysql.search("SELECT * FROM `user` WHERE `nic`='" + userData.get("nic") + "' OR `phone_number`='" + userData.get("phoneNumber") + "' OR `email`='" + userData.get("email") + "'").next();
     }
-    
-    private void insertUser(){
-        try {
-            ResultSet gRs = Mysql.search("SELECT * FROM `gender` WHERE `gender_name`='" + userData.get("gender") + "'");
-            Mysql.search("INSERT INTO `user` (`initials`,`ser_name`,`email`,`nic`,`phone_number`,`dob`,`user_name`,`password`,`gender_id`) "
+
+    private void insertUser() throws ClassNotFoundException, SQLException {
+        ResultSet gRs = Mysql.search("SELECT * FROM `gender` WHERE `gender_name`='" + userData.get("gender") + "'");
+        if (gRs.next()) {
+            Mysql.iud("INSERT INTO `user` (`initials`,`ser_name`,`email`,`nic`,`phone_number`,`dob`,`user_name`,`password`,`gender_id`) "
                     + "VALUES ('" + userData.get("initials") + "','" + userData.get("surName") + "','" + userData.get("email") + "','" + userData.get("nic") + "','" + userData.get("phoneNumber") + "','" + userData.get("dob") + "','" + userData.get("userName") + "','" + userData.get("password") + "','" + gRs.getInt("gender_id") + "')");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    private int getPK() throws ClassNotFoundException, SQLException {
+        ResultSet rs = Mysql.search("SELECT `user_id` FROM `user` WHERE `nic`='" + userData.get("nic") + "' AND `email`='" + userData.get("email") + "' AND `phone_number`='" + userData.get("phoneNumber") + "'");
+        return (rs.next()) ? rs.getInt("user_id") : 0;
+    }
+
+    private void insertAccount() throws ClassNotFoundException, SQLException {
+        if (getPK() != 0) {
+            Mysql.iud("INSERT INTO `account` (`account_id`,`amount`,`user_user_id`)"
+                    + "VALUES ('" + userData.get("accountNumber") + "','" + userData.get("amount") + "','" + getPK() + "')");        }
+    }
+
+    private void insertAddress() throws ClassNotFoundException, SQLException {
+        if (getPK() != 0) {
+            Mysql.iud("INSERT INTO `user_address` (`user_user_id`,`city_city_id`,`line1`,`line2`)"
+                    + "VALUES ('" + getPK() + "','" + getCityId() + "','" + userData.get("line1") + "','" + userData.get("line2") + "')");
+        }
+    }
+
+    private int getCityId() throws ClassNotFoundException, SQLException {
+        ResultSet rs = Mysql.search("SELECT `city_id` FROM `city` WHERE `city_name`='" + userData.get("city") + "'");
+        return (rs.next()) ? rs.getInt("city_id") : 0;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accNo;
