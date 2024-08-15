@@ -1,5 +1,6 @@
 package GUI;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -433,9 +434,16 @@ public class CreateAccount5 extends javax.swing.JFrame {
                 } else {
                     ResultSet gRs = Mysql.search("SELECT * FROM `gender` WHERE `gender_name`='" + userData.get("gender") + "'");
                     if (gRs.next()) {
-                        Mysql.iud("INSERT INTO `user` (`initials`,`ser_name`,`email`,`nic`,`phone_number`,`dob`,`user_name`,`password`,`gender_id`) "
+                        Long key =  Mysql.inertAndGetKey("INSERT INTO `user` (`initials`,`ser_name`,`email`,`nic`,`phone_number`,`dob`,`user_name`,`password`,`gender_id`) "
                                 + "VALUES ('" + userData.get("initials") + "','" + userData.get("surName") + "','" + userData.get("email") + "','" + userData.get("nic") + "','" + userData.get("phoneNumber") + "','" + userData.get("dob") + "','" + userData.get("userName") + "','" + userData.get("password") + "','" + gRs.getInt("gender_id") + "')");
-                        JOptionPane.showMessageDialog(this, "Account Created! Login to your account");
+                        Mysql.iud("INSERT INTO `account` (`account_id`,`amount`,`user_user_id`)"
+                                + "VALUES ('"+userData.get("accountNumber")+"','"+userData.get("amount")+"','"+key+"'");
+                        ResultSet cityRs = Mysql.search("SELECT * FROM `city` WHERE `city_name`='"+userData.get("city")+"'");
+                        int cityId = cityRs.getInt("city_id");
+                        
+                        Mysql.iud("INSERT INTO `user_address` (`user_user_id`,`city_city_id`,`line1`,`line2`)"
+                                + "VALUES ('"+key+"','"+cityId+"','"+userData.get("line1")+"','"+userData.get("line2")+"'");
+                        JOptionPane.showMessageDialog(this, "Account Created! Login to your account ");
                         new Welcome().setVisible(true);
                     }
 
