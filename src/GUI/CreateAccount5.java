@@ -432,20 +432,8 @@ public class CreateAccount5 extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Arleady have user with a same Email , NIC or Phone number");
                     new CreateAccount().setVisible(true);
                 } else {
-                    ResultSet gRs = Mysql.search("SELECT * FROM `gender` WHERE `gender_name`='" + userData.get("gender") + "'");
-                    if (gRs.next()) {
-                        Long key =  Mysql.inertAndGetKey("INSERT INTO `user` (`initials`,`ser_name`,`email`,`nic`,`phone_number`,`dob`,`user_name`,`password`,`gender_id`) "
-                                + "VALUES ('" + userData.get("initials") + "','" + userData.get("surName") + "','" + userData.get("email") + "','" + userData.get("nic") + "','" + userData.get("phoneNumber") + "','" + userData.get("dob") + "','" + userData.get("userName") + "','" + userData.get("password") + "','" + gRs.getInt("gender_id") + "')");
-                        Mysql.iud("INSERT INTO `account` (`account_id`,`amount`,`user_user_id`)"
-                                + "VALUES ('"+userData.get("accountNumber")+"','"+userData.get("amount")+"','"+key+"'");
-                        ResultSet cityRs = Mysql.search("SELECT * FROM `city` WHERE `city_name`='"+userData.get("city")+"'");
-                        int cityId = cityRs.getInt("city_id");
-                        
-                        Mysql.iud("INSERT INTO `user_address` (`user_user_id`,`city_city_id`,`line1`,`line2`)"
-                                + "VALUES ('"+key+"','"+cityId+"','"+userData.get("line1")+"','"+userData.get("line2")+"'");
-                        JOptionPane.showMessageDialog(this, "Account Created! Login to your account ");
-                        new Welcome().setVisible(true);
-                    }
+                    
+                    
 
                 }
 
@@ -464,6 +452,18 @@ public class CreateAccount5 extends javax.swing.JFrame {
 
     private boolean searchOldUser() throws ClassNotFoundException, SQLException {
         return Mysql.search("SELECT * FROM `user` WHERE `nic`='" + userData.get("nic") + "' OR `phone_number`='" + userData.get("phoneNumber") + "' OR `email`='" + userData.get("email") + "'").next();
+    }
+    
+    private void insertUser(){
+        try {
+            ResultSet gRs = Mysql.search("SELECT * FROM `gender` WHERE `gender_name`='" + userData.get("gender") + "'");
+            Mysql.search("INSERT INTO `user` (`initials`,`ser_name`,`email`,`nic`,`phone_number`,`dob`,`user_name`,`password`,`gender_id`) "
+                    + "VALUES ('" + userData.get("initials") + "','" + userData.get("surName") + "','" + userData.get("email") + "','" + userData.get("nic") + "','" + userData.get("phoneNumber") + "','" + userData.get("dob") + "','" + userData.get("userName") + "','" + userData.get("password") + "','" + gRs.getInt("gender_id") + "')");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateAccount5.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 
