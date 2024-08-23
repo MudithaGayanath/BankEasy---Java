@@ -7,8 +7,9 @@ public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
         initComponents();
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -111,15 +112,6 @@ public class Welcome extends javax.swing.JFrame {
         new CreateAccount().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_createAccountActionPerformed
-
-    public static void main(String args[]) {
-       FlatDarkLaf.setup();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Welcome().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createAccount;

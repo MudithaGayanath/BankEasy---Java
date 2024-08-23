@@ -9,10 +9,17 @@ import java.sql.Statement;
 
 public class Mysql {
 
+    /**
+     * @return the con
+     */
+    public static Connection getCon() {
+        return con;
+    }
+
     private static Connection con;
 
     public static void createConnection() throws ClassNotFoundException, SQLException {
-        if (con == null) {
+        if (getCon() == null) {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank_easy", "root", "Gaiyapilot@9453");
         }
@@ -20,11 +27,11 @@ public class Mysql {
 
     public static ResultSet search(String query) throws ClassNotFoundException,SQLException{
         Mysql.createConnection();
-        return con.createStatement().executeQuery(query);
+        return getCon().createStatement().executeQuery(query);
     }
     public static int iud(String query)throws ClassNotFoundException,SQLException{
         Mysql.createConnection();
-        return con.createStatement().executeUpdate(query);
+        return getCon().createStatement().executeUpdate(query);
     }
 
    
